@@ -25,7 +25,7 @@ int main() {
     USER_INFO("fetchd: daemon started");
 
     while (isRunning) {
-        std::cout << "fetchd: running\n";
+        INFO_LOG("fetchd: running");
         std::raise(SIGTERM);
     }
 
