@@ -1,4 +1,5 @@
 #include "main.h"
+#include "log.h"
 
 #include <atomic>
 #include <csignal>
@@ -12,7 +13,7 @@ static std::atomic<bool> isRunning{true};
 
 // Signal handler
 void handle_signal(int signal) {
-    std::cout << "Received signal: " << signal << '\n';
+    DEBUG_LOG("Received signal: " << signal);
     isRunning = false;
 }
 
@@ -21,13 +22,13 @@ int main() {
     std::signal(SIGINT, handle_signal);   // Ctrl+C
     std::signal(SIGTERM, handle_signal);  // kill
 
-    std::cout << "fetchd: daemon started\n";
+    USER_INFO("fetchd: daemon started");
 
     while (isRunning) {
         std::cout << "fetchd: running\n";
         std::raise(SIGTERM);
     }
 
-    std::cout << "fetchd: daemon stopping\n";
+    USER_INFO("fetchd: daemon stopping");
     return 0;
 }
